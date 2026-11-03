@@ -13,7 +13,7 @@ An aesthetic, ultra-fast, and modern terminal environment designed for **Termux*
 - ⚡ **Starship Prompt:** Fast, context-aware prompt showing User, Git branch & status (`⇡`/`⇣`/`!`/`+`), Python/Node/Rust/Java versions, and command duration timer.
 - 📊 **Fastfetch System Dashboard:** Real-time Memory, Device Storage, and accurate PRoot container footprint.
 - 🎨 **12 Designer Color Themes & Starship Presets:** Built-in one-command switcher (`theme`) supporting Catppuccin Mocha, Catppuccin Latte, Tokyo Night, Dracula, Gruvbox Dark, Nord, Rosé Pine, Kanagawa, Cyberpunk, One Dark, Hacker Green, and Termux Default with instant OSC terminal palette repaint.
-- 🔮 **Fish-style Syntax Highlighting & Autosuggestions:** Fast command autocompletion (`Right Arrow` or `Ctrl + Space` to accept).
+- 🔮 **Fish-style Syntax Highlighting & Autosuggestions:** Fast, reliable command autocompletion (`Right Arrow`, `Ctrl + F`, `Ctrl + E`, or `Ctrl + Space` to accept; `Ctrl + Right` or `Alt + F` for word-by-word accept).
 - 🔍 **Interactive FZF Integration:**
   - `Ctrl + R`: Interactive fuzzy search through command history.
   - `Ctrl + T`: File search with live syntax-highlighted `bat` previews.

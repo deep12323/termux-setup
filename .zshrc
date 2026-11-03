@@ -74,18 +74,51 @@ for _as_path in \
   "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" \
   "/data/data/com.termux/files/home/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"; do
   if [ -f "$_as_path" ]; then
-    source "$_as_path" 2>/dev/null || true
-    ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+    ZSH_AUTOSUGGEST_STRATEGY=(history)
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c7086,bold"
-    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=30
-    ZSH_AUTOSUGGEST_USE_ASYNC=1
+    source "$_as_path" 2>/dev/null || true
+    unset ZSH_AUTOSUGGEST_USE_ASYNC
+    unset ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE
     bindkey '^[[C' autosuggest-accept 2>/dev/null || true
+    bindkey '^[OC' autosuggest-accept 2>/dev/null || true
+    bindkey '^F' autosuggest-accept 2>/dev/null || true
+    bindkey '^E' autosuggest-accept 2>/dev/null || true
     bindkey '^@' autosuggest-accept 2>/dev/null || true
+    bindkey '^[[F' autosuggest-accept 2>/dev/null || true
+    bindkey '^[OF' autosuggest-accept 2>/dev/null || true
+    bindkey '^[[1;5C' forward-word 2>/dev/null || true
+    bindkey '^[f' forward-word 2>/dev/null || true
     break
   fi
 done
 
-# Syntax Highlighting (Configured and loaded)
+# ── 6. FZF Fuzzy Finder Integration ──────────────────────────
+if command -v fzf &>/dev/null; then
+  export FZF_DEFAULT_OPTS=" \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+  --color=selected-bg:#45475a \
+  --multi --height=45% --layout=reverse --border=rounded --info=inline-right"
+
+  export FZF_CTRL_T_OPTS="--preview 'if [ -d {} ]; then eza --tree --level=2 --color=always --icons {} 2>/dev/null || ls -la {}; else bat --style=numbers --color=always --line-range :200 {} 2>/dev/null || cat {}; fi'"
+  export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always --icons {} 2>/dev/null || ls -la {}'"
+
+  source <(fzf --zsh 2>/dev/null) || true
+fi
+
+# ── 7. Zoxide (Smart cd) ─────────────────────────────────────
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
+fi
+
+# ── 8. Starship Prompt ───────────────────────────────────────
+if command -v starship &>/dev/null; then
+  eval "$(starship init zsh)"
+fi
+
+# ── 9. Syntax Highlighting (Loaded after all widgets) ─────────
 typeset -gA ZSH_HIGHLIGHT_STYLES 2>/dev/null || true
 typeset -ga ZSH_HIGHLIGHT_HIGHLIGHTERS 2>/dev/null || true
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets cursor)
@@ -117,32 +150,6 @@ for _sh_path in \
     break
   fi
 done
-
-# ── 6. FZF Fuzzy Finder Integration ──────────────────────────
-if command -v fzf &>/dev/null; then
-  export FZF_DEFAULT_OPTS=" \
-  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
-  --color=selected-bg:#45475a \
-  --multi --height=45% --layout=reverse --border=rounded --info=inline-right"
-
-  export FZF_CTRL_T_OPTS="--preview 'if [ -d {} ]; then eza --tree --level=2 --color=always --icons {} 2>/dev/null || ls -la {}; else bat --style=numbers --color=always --line-range :200 {} 2>/dev/null || cat {}; fi'"
-  export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always --icons {} 2>/dev/null || ls -la {}'"
-
-  source <(fzf --zsh 2>/dev/null) || true
-fi
-
-# ── 7. Zoxide (Smart cd) ─────────────────────────────────────
-if command -v zoxide &>/dev/null; then
-  eval "$(zoxide init zsh)"
-  alias cd="z"
-fi
-
-# ── 8. Starship Prompt ───────────────────────────────────────
-if command -v starship &>/dev/null; then
-  eval "$(starship init zsh)"
-fi
 
 # ── 9. Modern Aliases ────────────────────────────────────────
 # File listing with Eza
