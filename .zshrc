@@ -76,6 +76,7 @@ for _as_path in \
   if [ -f "$_as_path" ]; then
     ZSH_AUTOSUGGEST_STRATEGY=(history)
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c7086,bold"
+    ZSH_AUTOSUGGEST_HISTORY_IGNORE="*\n*"
     source "$_as_path" 2>/dev/null || true
     unset ZSH_AUTOSUGGEST_USE_ASYNC
     unset ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE
