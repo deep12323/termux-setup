@@ -33,7 +33,7 @@
       "type": "command",
       "key": "  󰉉 Storage",
       "keyColor": "yellow",
-      "text": "df -h /sdcard 2>/dev/null | awk 'NR==2 {print $3 \" / \" $2 \" (\" $4 \" free)\"}'"
+      "text": "df -h \"$HOME\" 2>/dev/null | awk 'NR==2 {print $3 \" / \" $2 \" (\" $4 \" free)\"}'"
     },
     {
       "type": "custom",
